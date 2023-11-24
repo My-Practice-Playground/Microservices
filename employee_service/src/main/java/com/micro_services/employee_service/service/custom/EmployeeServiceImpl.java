@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 /**
  * Author: shan
  * Created: 2023-11-24 12.46
@@ -35,11 +37,17 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public boolean deleteEmployee(String id) {
-        return false;
+        employeeRepo.deleteById(id);
+        return true;
     }
 
     @Override
     public EmployeeDto getEmployee(String id) {
-        return null;
+        Optional<Employee> employeeOptional =
+                employeeRepo.findById(id);
+        if (employeeOptional.isPresent()) {
+            return modelMapper.map(employeeOptional.get(), EmployeeDto.class);
+        }
+        throw new RuntimeException("Employee not found");
     }
 }

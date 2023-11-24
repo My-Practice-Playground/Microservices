@@ -35,4 +35,13 @@ public class UserController {
             return new StandardMessageResponse(userService.getUserById(id), 200, "User fetched successfully!");
         return new StandardMessageResponse(null, 400, "User does not exist!");
     }
+
+    @PatchMapping("/update")
+    public StandardMessageResponse update(@RequestBody UserDto userDto) {
+        if (userService.existsUserById(userDto.getId())) {
+            userService.save(modelMapper.map(userDto, User.class));
+            return new StandardMessageResponse(userDto, 200, "User updated successfully!");
+        }
+        return new StandardMessageResponse(null, 400, "User does not exist!");
+    }
 }

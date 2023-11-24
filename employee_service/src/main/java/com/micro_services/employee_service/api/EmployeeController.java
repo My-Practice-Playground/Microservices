@@ -44,5 +44,13 @@ public class EmployeeController {
         return new StandardMessageResponse(null, 200, "Employee does not exists");
     }
 
+    @GetMapping("/get/{id}")
+    public StandardMessageResponse getEmployee(@PathVariable String id) {
+        if (employeeService.existsById(id)) {
+            return new StandardMessageResponse(employeeService.getEmployee(id), 200, "Employee retrieved successfully");
+        }
+        return new StandardMessageResponse(null, 400, "Employee does not exists");
+    }
+
 
 }

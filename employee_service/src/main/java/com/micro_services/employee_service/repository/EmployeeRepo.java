@@ -12,4 +12,5 @@ import org.springframework.stereotype.Repository;
 @EnableMongoRepositories
 @Repository
 public interface EmployeeRepo extends MongoRepository<Employee,String> {
+    boolean existsById(String id);
 }

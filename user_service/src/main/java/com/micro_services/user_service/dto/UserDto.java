@@ -3,6 +3,7 @@ package com.micro_services.user_service.dto;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
 /**
@@ -11,7 +12,8 @@ import lombok.RequiredArgsConstructor;
  */
 
 @Data
-@RequiredArgsConstructor
+@AllArgsConstructor
+@NoArgsConstructor
 public class UserDto {
     private String id;
     private String password;

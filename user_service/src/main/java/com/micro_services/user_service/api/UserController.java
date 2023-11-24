@@ -7,10 +7,7 @@ import com.micro_services.user_service.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * Author: shan
@@ -30,5 +27,11 @@ public class UserController {
             return new StandardMessageResponse(null,201, "User saved successfully!");
         }
         return new StandardMessageResponse(null, 400, "User already exists!");
+    }
+
+    @GetMapping("/get")
+    public StandardMessageResponse get(@RequestParam String id) {
+       if(userService.existsUserById(id)) return new StandardMessageResponse(userService.getUserById(id), 200, "User fetched successfully!");
+         return new StandardMessageResponse(null, 400, "User does not exist!");
     }
 }

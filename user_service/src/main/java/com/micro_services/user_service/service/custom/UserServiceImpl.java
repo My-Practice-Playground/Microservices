@@ -1,10 +1,13 @@
 package com.micro_services.user_service.service.custom;
 
+import com.micro_services.user_service.dto.UserDto;
 import com.micro_services.user_service.entity.User;
 import com.micro_services.user_service.repo.UserRepository;
 import com.micro_services.user_service.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 /**
  * Author: shan
@@ -12,9 +15,11 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class UserServiceImpl implements UserService {
+    private final ModelMapper modelMapper;
     private final UserRepository userRepository;
 
-    public UserServiceImpl(UserRepository userRepository) {
+    public UserServiceImpl(ModelMapper modelMapper, UserRepository userRepository) {
+        this.modelMapper = modelMapper;
         this.userRepository = userRepository;
     }
 
@@ -27,5 +32,12 @@ public class UserServiceImpl implements UserService {
     public boolean save(User user) {
         User save = userRepository.save(user);
         return save!=null;
+    }
+
+    @Override
+    public UserDto getUserById(String id) {
+        User userById =
+                userRepository.findUserById(id);
+        return modelMapper.map(userById, UserDto.class);
     }
 }

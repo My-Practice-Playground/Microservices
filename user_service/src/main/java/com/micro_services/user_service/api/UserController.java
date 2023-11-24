@@ -44,4 +44,12 @@ public class UserController {
         }
         return new StandardMessageResponse(null, 400, "User does not exist!");
     }
+    @DeleteMapping("/delete")
+    public StandardMessageResponse delete(@RequestParam String id) {
+        if (userService.existsUserById(id)) {
+            userService.deleteUserById(id);
+            return new StandardMessageResponse(null, 200, "User deleted successfully!");
+        }
+        return new StandardMessageResponse(null, 400, "User does not exist!");
+    }
 }

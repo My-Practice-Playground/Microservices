@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 public interface UserService {
     boolean existsUserById(String id);
     boolean save(User user);
-
     UserDto getUserById(String id);
+    boolean updateUser(UserDto userDto);
+    boolean deleteUserById(String id);
 }

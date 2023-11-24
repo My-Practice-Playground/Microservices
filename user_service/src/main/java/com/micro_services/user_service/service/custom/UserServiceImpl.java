@@ -7,8 +7,6 @@ import com.micro_services.user_service.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
 /**
  * Author: shan
  * Created: 2023-11-24 10.38
@@ -31,13 +29,24 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean save(User user) {
         User save = userRepository.save(user);
-        return save!=null;
+        return save != null;
     }
 
     @Override
     public UserDto getUserById(String id) {
-        User userById =
-                userRepository.findUserById(id);
+        User userById = userRepository.findUserById(id);
         return modelMapper.map(userById, UserDto.class);
+    }
+
+    @Override
+    public boolean updateUser(UserDto userDto) {
+        User save = userRepository.save(modelMapper.map(userDto, User.class));
+        return save != null;
+    }
+
+    @Override
+    public boolean deleteUserById(String id) {
+       userRepository.deleteById(id);
+       return true;
     }
 }

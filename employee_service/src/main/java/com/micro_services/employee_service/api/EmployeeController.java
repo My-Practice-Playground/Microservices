@@ -1,13 +1,12 @@
 package com.micro_services.employee_service.api;
 
 import com.micro_services.employee_service.dto.EmployeeDto;
-import com.micro_services.employee_service.entity.Employee;
 import com.micro_services.employee_service.payload.StandardMessageResponse;
 import com.micro_services.employee_service.service.EmployeeService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
 /**
  * Author: shan
@@ -37,7 +36,7 @@ public class EmployeeController {
                     new StandardMessageResponse(null, 200, "Employee updated successfully") :
                     new StandardMessageResponse(null, 200, "Employee update failed");
         }
-        return new StandardMessageResponse(null, 200, "Employee does not exists");
+        return new StandardMessageResponse(null, 404, "Employee does not exists");
     }
 
     @DeleteMapping("/delete/{id}")
@@ -47,7 +46,7 @@ public class EmployeeController {
                     new StandardMessageResponse(id, 200, "Employee deleted successfully") :
                     new StandardMessageResponse(id, 200, "Employee delete failed");
         }
-        return new StandardMessageResponse(null, 200, "Employee does not exists");
+        return new StandardMessageResponse(null, 404, "Employee does not exists");
     }
 
     @GetMapping("/get/{id}")
@@ -55,7 +54,19 @@ public class EmployeeController {
         if (employeeService.existsById(id)) {
             return new StandardMessageResponse(employeeService.getEmployee(id), 200, "Employee retrieved successfully");
         }
-        return new StandardMessageResponse(null, 400, "Employee does not exists");
+        return new StandardMessageResponse(null, 404, "Employee does not exists");
+    }
+
+    @GetMapping("/get/user/{id}")
+    public StandardMessageResponse getUser(@PathVariable String id) {
+        RestTemplate restTemplate = new RestTemplate();
+        StandardMessageResponse forObject = restTemplate.getForObject("http://localhost:8080/api/v1/user/get?id=" + id, StandardMessageResponse.class);
+        if(forObject!=null){
+           return forObject.getStatus() == 200 ?
+                    new StandardMessageResponse(forObject.getData(), 200, "User retrieved successfully") :
+                    new StandardMessageResponse(null, 404, "User does not exists");
+        }
+        return new StandardMessageResponse(null, 404, "Request failed");
     }
 
 }

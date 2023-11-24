@@ -23,15 +23,19 @@ public class EmployeeController {
     @PostMapping("/save")
     public StandardMessageResponse saveEmployee(@RequestBody EmployeeDto employeeDto) {
         if (!employeeService.existsById(employeeDto.getId())) {
-            return employeeService.saveEmployee(employeeDto) ? new StandardMessageResponse(null, 200, "Employee saved successfully") : new StandardMessageResponse(null, 200, "Employee save failed");
+            return employeeService.saveEmployee(employeeDto) ?
+                    new StandardMessageResponse(null, 200, "Employee saved successfully") :
+                    new StandardMessageResponse(null, 200, "Employee save failed");
         }
         return new StandardMessageResponse(null, 200, "Employee already exists");
     }
 
-    @PostMapping("/update")
+    @PatchMapping("/update")
     public StandardMessageResponse updateEmployee(@RequestBody EmployeeDto employeeDto) {
         if (employeeService.existsById(employeeDto.getId())) {
-            return employeeService.updateEmployee(employeeDto) ? new StandardMessageResponse(null, 200, "Employee updated successfully") : new StandardMessageResponse(null, 200, "Employee update failed");
+            return employeeService.updateEmployee(employeeDto) ?
+                    new StandardMessageResponse(null, 200, "Employee updated successfully") :
+                    new StandardMessageResponse(null, 200, "Employee update failed");
         }
         return new StandardMessageResponse(null, 200, "Employee does not exists");
     }
@@ -39,7 +43,9 @@ public class EmployeeController {
     @DeleteMapping("/delete/{id}")
     public StandardMessageResponse deleteEmployee(@PathVariable String id) {
         if (employeeService.existsById(id)) {
-            return employeeService.deleteEmployee(id) ? new StandardMessageResponse(null, 200, "Employee deleted successfully") : new StandardMessageResponse(null, 200, "Employee delete failed");
+            return employeeService.deleteEmployee(id) ?
+                    new StandardMessageResponse(id, 200, "Employee deleted successfully") :
+                    new StandardMessageResponse(id, 200, "Employee delete failed");
         }
         return new StandardMessageResponse(null, 200, "Employee does not exists");
     }
@@ -51,6 +57,5 @@ public class EmployeeController {
         }
         return new StandardMessageResponse(null, 400, "Employee does not exists");
     }
-
 
 }

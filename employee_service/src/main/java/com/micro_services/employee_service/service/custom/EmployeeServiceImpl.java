@@ -30,7 +30,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public boolean updateEmployee(EmployeeDto employeeDto) {
-        return false;
+       return employeeRepo.save(modelMapper.map(employeeDto, Employee.class))!=null;
     }
 
     @Override

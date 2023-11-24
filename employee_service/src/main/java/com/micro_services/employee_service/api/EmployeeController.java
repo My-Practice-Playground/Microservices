@@ -31,7 +31,13 @@ public class EmployeeController {
         return new StandardMessageResponse(null, 200, "Employee already exists");
     }
 
-
+    @PostMapping("/update")
+    public StandardMessageResponse updateEmployee(@RequestBody EmployeeDto employeeDto) {
+        if (employeeService.existsById(employeeDto.getId())) {
+            return employeeService.updateEmployee(employeeDto) ? new StandardMessageResponse(null, 200, "Employee updated successfully") : new StandardMessageResponse(null, 200, "Employee update failed");
+        }
+        return new StandardMessageResponse(null, 200, "Employee does not exists");
+    }
 
 
 }

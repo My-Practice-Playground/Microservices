@@ -1,5 +1,6 @@
 package com.micro_services.employee_service.service;
 
+import com.micro_services.employee_service.dto.EmployeeDto;
 import lombok.RequiredArgsConstructor;
 
 /**
@@ -8,5 +9,8 @@ import lombok.RequiredArgsConstructor;
  */
 public interface EmployeeService {
     boolean existsById(String id);
-
+    boolean saveEmployee(EmployeeDto employeeDto);
+    boolean updateEmployee(EmployeeDto employeeDto);
+    boolean deleteEmployee(String id);
+    EmployeeDto getEmployee(String id);
 }

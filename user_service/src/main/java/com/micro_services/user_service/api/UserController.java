@@ -24,14 +24,15 @@ public class UserController {
     public StandardMessageResponse post(@RequestBody UserDto userDto) {
         if (!userService.existsUserById(userDto.getId())) {
             userService.save(modelMapper.map(userDto, User.class));
-            return new StandardMessageResponse(null,201, "User saved successfully!");
+            return new StandardMessageResponse(null, 201, "User saved successfully!");
         }
         return new StandardMessageResponse(null, 400, "User already exists!");
     }
 
     @GetMapping("/get")
     public StandardMessageResponse get(@RequestParam String id) {
-       if(userService.existsUserById(id)) return new StandardMessageResponse(userService.getUserById(id), 200, "User fetched successfully!");
-         return new StandardMessageResponse(null, 400, "User does not exist!");
+        if (userService.existsUserById(id))
+            return new StandardMessageResponse(userService.getUserById(id), 200, "User fetched successfully!");
+        return new StandardMessageResponse(null, 400, "User does not exist!");
     }
 }

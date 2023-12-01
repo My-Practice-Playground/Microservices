@@ -62,17 +62,14 @@ public class UserController {
 
     @ResponseStatus(code = HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public Map<String,String> handleValidationExceptions(MethodArgumentNotValidException e){
-        Map<String,String>errors = new HashMap<>();
-        e.getBindingResult()
-                .getFieldErrors()
-                .forEach(
-                        error->{
-                            String fieldName = error.getField();
-                            String message = error.getDefaultMessage();
-                            errors.put(fieldName,message);
-                        }
-                );
+    public Map<String, String> handleValidationExceptions(MethodArgumentNotValidException e) {
+        Map<String, String> errors = new HashMap<>();
+        e.getBindingResult().getFieldErrors().forEach(error -> {
+            String fieldName = error.getField();
+            String message = error.getDefaultMessage();
+            errors.put(fieldName, message);
+        });
         return errors;
     }
+
 }

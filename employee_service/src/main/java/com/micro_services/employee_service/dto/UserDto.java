@@ -1,4 +1,4 @@
-package com.micro_services.user_service.dto;
+package com.micro_services.employee_service.dto;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 
 /**
  * Author: shan
- * Created: 2023-11-24 10.48
+ * Created: 12/1/23 9:22 AM
  */
 
 @Data

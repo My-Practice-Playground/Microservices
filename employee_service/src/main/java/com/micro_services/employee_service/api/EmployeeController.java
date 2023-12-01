@@ -1,6 +1,7 @@
 package com.micro_services.employee_service.api;
 
 import com.micro_services.employee_service.dto.EmployeeDto;
+import com.micro_services.employee_service.dto.UserDto;
 import com.micro_services.employee_service.payload.StandardMessageResponse;
 import com.micro_services.employee_service.service.EmployeeService;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +25,7 @@ public class EmployeeController {
         if (!employeeService.existsById(employeeDto.getId())) {
             return employeeService.saveEmployee(employeeDto) ? new StandardMessageResponse(null, 200, "Employee saved successfully") : new StandardMessageResponse(null, 200, "Employee save failed");
         }
-        return new StandardMessageResponse(null, 200, "Employee already exists");
+        return new StandardMessageResponse("saved", 200, "Employee already exists");
     }
 
     @PatchMapping("/update")
@@ -57,6 +58,22 @@ public class EmployeeController {
         StandardMessageResponse forObject = restTemplate.getForObject("http://localhost:8080/api/v1/user/get?id=" + id, StandardMessageResponse.class);
         if (forObject != null) {
             return forObject.getStatus() == 200 ? new StandardMessageResponse(forObject.getData(), 200, "User retrieved successfully") : new StandardMessageResponse(null, 404, "User does not exists");
+        }
+        return new StandardMessageResponse(null, 404, "Request failed");
+    }
+
+    @PostMapping("/post/user")
+    public StandardMessageResponse postUser(@RequestBody UserDto employeeDto) {
+        RestTemplate restTemplate = new RestTemplate();
+        StandardMessageResponse forObject = restTemplate.postForObject(
+                "http://localhost:8070/api/v1/user/post",
+                employeeDto,
+                StandardMessageResponse.class
+        );
+        if (forObject != null) {
+            return forObject.getStatus() == 201
+                    ? new StandardMessageResponse(forObject.getData(), 200, "User saved successfully")
+                    : new StandardMessageResponse(null, 404, "User save failed");
         }
         return new StandardMessageResponse(null, 404, "Request failed");
     }

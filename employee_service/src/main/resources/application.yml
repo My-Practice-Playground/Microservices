@@ -1,6 +1,7 @@
 spring:
   application:
-    name: user-service
+    name: employee-service
 
   config:
     import: "optional:configserver:http://localhost:8090"
+

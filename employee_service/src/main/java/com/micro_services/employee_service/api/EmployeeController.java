@@ -52,6 +52,7 @@ public class EmployeeController {
         return new StandardMessageResponse(null, 404, "Employee does not exists");
     }
 
+    //get user from user service using RestTemplate
     @GetMapping("/get/user/{id}")
     public StandardMessageResponse getUser(@PathVariable String id) {
         RestTemplate restTemplate = new RestTemplate();
@@ -67,6 +68,7 @@ public class EmployeeController {
         return new StandardMessageResponse(null, 404, "Request failed");
     }
 
+    //post user to user service using RestTemplate
     @PostMapping("/post/user")
     public StandardMessageResponse postUser(@RequestBody UserDto employeeDto) {
         RestTemplate restTemplate = new RestTemplate();
@@ -82,5 +84,4 @@ public class EmployeeController {
         }
         return new StandardMessageResponse(null, 404, "Request failed");
     }
-
 }

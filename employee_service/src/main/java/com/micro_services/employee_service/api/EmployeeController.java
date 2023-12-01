@@ -55,9 +55,14 @@ public class EmployeeController {
     @GetMapping("/get/user/{id}")
     public StandardMessageResponse getUser(@PathVariable String id) {
         RestTemplate restTemplate = new RestTemplate();
-        StandardMessageResponse forObject = restTemplate.getForObject("http://localhost:8080/api/v1/user/get?id=" + id, StandardMessageResponse.class);
+        StandardMessageResponse forObject = restTemplate.getForObject(
+                "http://localhost:8070/api/v1/user/get?id=" + id,
+                StandardMessageResponse.class
+        );
         if (forObject != null) {
-            return forObject.getStatus() == 200 ? new StandardMessageResponse(forObject.getData(), 200, "User retrieved successfully") : new StandardMessageResponse(null, 404, "User does not exists");
+            return forObject.getStatus() == 200
+                    ? new StandardMessageResponse(forObject.getData(), 200, "User retrieved successfully")
+                    : new StandardMessageResponse(null, 404, "User does not exists");
         }
         return new StandardMessageResponse(null, 404, "Request failed");
     }
